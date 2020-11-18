@@ -1,11 +1,6 @@
-FROM alpine:3.8
+FROM debian:stable-slim
 
-ARG CURATOR_VERSION=5.7.6
-ENV CURATOR_VERSION=$CURATOR_VERSION
-
-RUN apk add --no-cache tini python py-pip                   \
-  && pip install elasticsearch-curator==${CURATOR_VERSION}  \
-  && pip install -U pyyaml==3.12
+RUN apt -y update;apt -y upgrade; apt install -y python elasticsearch-curator cron tini crond
 
 COPY entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint
